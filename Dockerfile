@@ -15,10 +15,12 @@ RUN conda create -y -n py36 python=3.6 cookiecutter
 ENV PATH /opt/conda/envs/py36/bin:$PATH
 
 RUN cookiecutter gh:Pylons/pyramid-cookiecutter-alchemy --checkout master --no-input
-# create the demo
-RUN cd pyramid_scaffold && pip install -e .
-# not sure what this is
+# this is the app directory
 WORKDIR pyramid_scaffold
+# create the demo
+RUN pip install -e .
+RUN ls /opt/conda/envs/py36/bin
+RUN initialize_pyramid_scaffold_db production.ini
 EXPOSE 6543
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
-CMD [ "pserve production.ini" ]
+CMD [ "pserve", "production.ini" ]
