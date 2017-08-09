@@ -9,7 +9,8 @@ RUN \
     apt-get update --fix-missing && \
     apt-get install -y build-essential
 # switch to python 3.5 (no gdal in 3.6)
-RUN conda create -y -n py36 python=3.6 pyramid cookiecutter
+RUN conda config --add channels conda-forge
+RUN conda create -y -n py36 python=3.6 cookiecutter
 # add the virtualenv
 ENV PATH /opt/conda/envs/py36/bin:$PATH
 
